@@ -3,15 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import pandas as pd
 from io import StringIO
-from datetime import datetime,date
 import datetime
 
 
 app = Flask(__name__)
-mysql_password = "hodson2003"
-mysql_instance_name = "test3"
+mysql_password = "dddd"
+mysql_instance_name = "tt2-2"
 app.config[
-    'SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:' + mysql_password + '@aws-mytt2db.cssuvkukhmkq.us-east-2.rds.amazonaws.com/' + mysql_instance_name
+    'SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_password + '@localhost/' + mysql_instance_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'xxx'
 db = SQLAlchemy(app)
@@ -129,7 +128,7 @@ for i in range(len(datasets_string_list)):
     def add_new_CSV_instance(df):
 
         CSV_T_new_instance = CSV(
-            Upload_TimeStamp=start_time_each.strftime('%Y-%m-%d %H:%M:%S'),
+            Upload_TimeStamp=start_time_each,#.strftime('%Y-%m-%d %H:%M:%S')
             Data=datasets_string_list[0],
             Issuer=Issuer if Issuer else None,
             Raid_Finished_Date=datasets_string_timestamp[i],
@@ -139,7 +138,7 @@ for i in range(len(datasets_string_list)):
         db.session.commit()
     add_new_CSV_instance(df1)
     print(f"add_new_CSV_instance cost: {(datetime.datetime.now() - start_time_each)}")
-    csv_id = CSV.query.filter(CSV.Upload_TimeStamp == start_time_each.strftime('%Y-%m-%d %H:%M:%S')).first().CSV_ID
+    csv_id = CSV.query.filter(CSV.Upload_TimeStamp == start_time_each).first().CSV_ID#.strftime('%Y-%m-%d %H:%M:%S')
     print(csv_id)
 
     playerName_playerCode = df1.groupby(["PlayerName", "PlayerCode"]).count().reset_index()[
@@ -224,8 +223,6 @@ for i in range(len(datasets_string_list)):
     db.session.commit()
     end_time_each = datetime.datetime.now()
     print(f'{datasets_string_timestamp[i]} time used: {(end_time_each - start_time_each)}')
-    break
-
 
 end_time_total = datetime.datetime.now()
 print(f'total time used: {(end_time_total - start_time_total)}')
