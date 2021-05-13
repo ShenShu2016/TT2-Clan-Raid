@@ -7,7 +7,7 @@ CREATE TABLE `Clan` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Player_Name` (
+CREATE TABLE `PlayerName` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`PlayerCode` varchar(10) NOT NULL,
 	`PlayerName` varchar(50) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `Player_Name` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Attak_Detail` (
+CREATE TABLE `AttackDetail` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`PlayerCode` varchar(10) NOT NULL,
 	`CSV_ID` INT NOT NULL,
@@ -51,14 +51,14 @@ CREATE TABLE `Attak_Detail` (
 
 CREATE TABLE `CSV` (
 	`CSV_ID` INT NOT NULL AUTO_INCREMENT UNIQUE,
-	`Upload_TimeStamp` TIMESTAMP NOT NULL UNIQUE,
+	`Upload_TimeStamp` TIMESTAMP(6) NOT NULL UNIQUE,
 	`Data` TEXT NOT NULL,
 	`Issuer` varchar(50),
 	`Raid_Finished_Date` TIMESTAMP,
 	PRIMARY KEY (`CSV_ID`)
 );
 
-CREATE TABLE `Personal_Detail_Per_CSV` (
+CREATE TABLE `PersonalDetailPerCSV` (
 	`id` INT NOT NULL AUTO_INCREMENT UNIQUE,
 	`PlayerCode` varchar(10) NOT NULL,
 	`CSV_ID` INT NOT NULL,
@@ -69,8 +69,8 @@ CREATE TABLE `Personal_Detail_Per_CSV` (
 
 ALTER TABLE `Clan` ADD CONSTRAINT `Clan_fk0` FOREIGN KEY (`CSV_ID`) REFERENCES `CSV`(`CSV_ID`);
 
-ALTER TABLE `Player_Name` ADD CONSTRAINT `Player_Name_fk0` FOREIGN KEY (`CSV_ID`) REFERENCES `CSV`(`CSV_ID`);
+ALTER TABLE `PlayerName` ADD CONSTRAINT `PlayerName_fk0` FOREIGN KEY (`CSV_ID`) REFERENCES `CSV`(`CSV_ID`);
 
-ALTER TABLE `Attak_Detail` ADD CONSTRAINT `Attak_Detail_fk0` FOREIGN KEY (`CSV_ID`) REFERENCES `CSV`(`CSV_ID`);
+ALTER TABLE `AttackDetail` ADD CONSTRAINT `AttackDetail_fk0` FOREIGN KEY (`CSV_ID`) REFERENCES `CSV`(`CSV_ID`);
 
-ALTER TABLE `Personal_Detail_Per_CSV` ADD CONSTRAINT `Personal_Detail_Per_CSV_fk0` FOREIGN KEY (`CSV_ID`) REFERENCES `CSV`(`CSV_ID`);
+ALTER TABLE `PersonalDetailPerCSV` ADD CONSTRAINT `PersonalDetailPerCSV_fk0` FOREIGN KEY (`CSV_ID`) REFERENCES `CSV`(`CSV_ID`);
