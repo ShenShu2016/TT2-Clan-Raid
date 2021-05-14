@@ -7,7 +7,7 @@ import datetime
 
 app = Flask(__name__)
 mysql_password = "dddd"
-mysql_instance_name = "tt4"
+mysql_instance_name = "tt5"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_password + '@localhost/' + mysql_instance_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
@@ -262,6 +262,45 @@ for i in range(len(datasets_string_list)):
         # Player_Name_T_new_instances.append(Player_Name_T_new_instance)
         each_csv_instances.append(Player_Name_T_new_instance)
     playerName_playerCode.apply(add_new_Player_Name_instance, axis=1, args=())
+
+
+    def add_new_CSVRules_instance(row):
+
+        global each_csv_instances
+        global player_name_t_new_instances
+        body_TF = [True, True, True, True, True, True, True, True]
+        body = ['BodyHead', 'BodyTorso', 'BodyLeftArm', 'BodyRightArm', 'BodyLeftHand', 'BodyRightHand', 'BodyLeftLeg',
+                'BodyRightLeg']
+        for i in range(len(body)):
+            if row[body[i]] <= 5000000:
+                body_TF[i] = False
+
+        if body_TF == [True, True, True, True, True, True, True, True]:
+            return
+
+        CSVRules_t_new_instance = CSVRules(
+            TitanNumber=row['TitanNumber'],
+            TitanName=row['TitanName'],
+            CSV_ID=csv_id,
+            ArmorHead=body_TF[0],
+            ArmorTorso=body_TF[1],
+            ArmorLeftArm=body_TF[2],
+            ArmorRightArm=body_TF[3],
+            ArmorLeftHand=body_TF[4],
+            ArmorRightHand=body_TF[5],
+            ArmorLeftLeg=body_TF[6],
+            ArmorRightLeg=body_TF[7],
+        )
+
+        each_csv_instances.append(CSVRules_t_new_instance)
+
+
+    bodys = ['BodyHead', 'BodyTorso', 'BodyLeftArm', 'BodyRightArm', 'BodyLeftHand', 'BodyRightHand', 'BodyLeftLeg',
+             'BodyRightLeg']
+    no_attacks = df1.groupby(['TitanNumber', 'TitanName'])[bodys].sum()
+    no_attacks = no_attacks.reset_index()
+
+    no_attacks.apply(add_new_CSVRules_instance, axis=1, args=())
 
 
 

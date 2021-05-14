@@ -74,16 +74,16 @@ CREATE TABLE `PersonalDetailPerCSV` (
 CREATE TABLE `CSVRules` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`TitanNumber` INT NOT NULL,
-	`TitianName` varchar(20) NOT NULL,
+	`TitanName` varchar(20) NOT NULL,
 	`CSV_ID` INT NOT NULL,
-	`ArmorHead` INT NOT NULL,
-	`ArmorTorso` INT NOT NULL,
-	`ArmorLeftArm` INT NOT NULL,
-	`ArmorRightArm` INT NOT NULL,
-	`ArmorLeftHand` INT NOT NULL,
-	`ArmorRightHand` INT NOT NULL,
-	`ArmorLeftLeg` INT NOT NULL,
-	`ArmorRightLeg` INT NOT NULL,
+	`ArmorHead` BOOLEAN NOT NULL,
+	`ArmorTorso` BOOLEAN NOT NULL,
+	`ArmorLeftArm` BOOLEAN NOT NULL,
+	`ArmorRightArm` BOOLEAN NOT NULL,
+	`ArmorLeftHand` BOOLEAN NOT NULL,
+	`ArmorRightHand` BOOLEAN NOT NULL,
+	`ArmorLeftLeg` BOOLEAN NOT NULL,
+	`ArmorRightLeg` BOOLEAN NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
