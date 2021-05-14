@@ -5,24 +5,33 @@ import pandas as pd
 from io import StringIO
 import datetime
 
-
 app = Flask(__name__)
 mysql_password = "dddd"
-mysql_instance_name = "tt2-2"
-app.config[
-    'SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_password + '@localhost/' + mysql_instance_name
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'xxx'
+mysql_instance_name = "tt4"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_password + '@localhost/' + mysql_instance_name
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
-
+header_list = ['PlayerName', 'PlayerCode', 'TotalRaidAttacks', 'TitanNumber', 'TitanName', 'TitanDamage', 'ArmorHead',
+               'ArmorTorso', 'ArmorLeftArm', 'ArmorRightArm', 'ArmorLeftHand', 'ArmorRightHand', 'ArmorLeftLeg',
+               'ArmorRightLeg',
+               'BodyHead', 'BodyTorso', 'BodyLeftArm', 'BodyRightArm', 'BodyLeftHand', 'BodyRightHand', 'BodyLeftLeg',
+               'BodyRightLeg', 'SkeletonHead', 'SkeletonTorso', 'SkeletonLeftArm', 'SkeletonRightArm',
+               'SkeletonLeftHand',
+               'SkeletonRightHand', 'SkeletonLeftLeg', 'SkeletonRightLeg']
 class CSV(db.Model):
     __tablename__ = 'CSV'
     CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
-    Upload_TimeStamp = db.Column(db.DateTime, nullable=False,Default=datetime.datetime.now())
+    Upload_TimeStamp = db.Column(db.DateTime, nullable=False,default=datetime.datetime.now())
     Data = db.Column(db.Text, nullable=False)
     Issuer = db.Column(db.String(50), nullable=True)
-    Raid_Finished_Date = db.Column(db.DateTime, nullable=True,default=datetime.datetime.now())
+    Raid_Finished_Date = db.Column(db.DateTime, nullable=True)
+    MaxRaidAttacks = db.Column(db.Integer, nullable=False)
+    NumberParticipants = db.Column(db.Integer, nullable=False)
+    TotalTitanNumber = db.Column(db.Integer, nullable=False)
+
+    def __repr__(self):
+        return '<Task %r>' % self.CSV_ID
 
 
 class Clan(db.Model):
@@ -33,26 +42,37 @@ class Clan(db.Model):
     Clan_Code = db.Column(db.String(10), nullable=True)
     Issuer = db.Column(db.String(50), nullable=True)
 
+    def __repr__(self):
+        return '<Task %r>' % self.id
 
-class Personal_Detail_Per_CSV(db.Model):
-    __tablename__ = 'Personal_Detail_Per_CSV'
+
+class PersonalDetailPerCSV(db.Model):
+    __tablename__ = 'PersonalDetailPerCSV'
     id = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
     PlayerCode = db.Column(db.String(10), nullable=False)
     CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True)
-    TotalRaidAttacks = db.Column(db.Integer, nullable=False)
-    TotalTitanNumber = db.Column(db.Integer, nullable=False)
+    RaidAttacks = db.Column(db.Integer, nullable=False)
+    EffectiveDMG = db.Column(db.Integer, nullable=False)
+    WrongDMG = db.Column(db.Integer, nullable=False)
 
 
-class Player_Name(db.Model):
-    __tablename__ = 'Player_Name'
+    def __repr__(self):
+        return '<Task %r>' % self.id
+
+
+class PlayerName(db.Model):
+    __tablename__ = 'PlayerName'
     id = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
     PlayerCode = db.Column(db.String(10), nullable=False)
     PlayerName = db.Column(db.String(50), nullable=False)
     CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True)
 
+    def __repr__(self):
+        return '<Task %r>' % self.id
 
-class Attak_Detail(db.Model):
-    __tablename__ = 'Attak_Detail'
+
+class AttackDetail(db.Model):
+    __tablename__ = 'AttackDetail'
     id = db.Column(db.Integer, nullable=False, autoincrement=True, unique=True, primary_key=True)
     PlayerCode = db.Column(db.String(10), nullable=False)
     CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True)
@@ -84,14 +104,37 @@ class Attak_Detail(db.Model):
     SkeletonLeftLeg = db.Column(db.Integer, nullable=False)
     SkeletonRightLeg = db.Column(db.Integer, nullable=False)
 
+    def __repr__(self):
+        return '<Task %r>' % self.id
 
-header_list = ['PlayerName', 'PlayerCode', 'TotalRaidAttacks', 'TitanNumber', 'TitanName', 'TitanDamage', 'ArmorHead',
-               'ArmorTorso', 'ArmorLeftArm', 'ArmorRightArm', 'ArmorLeftHand', 'ArmorRightHand', 'ArmorLeftLeg',
-               'ArmorRightLeg',
-               'BodyHead', 'BodyTorso', 'BodyLeftArm', 'BodyRightArm', 'BodyLeftHand', 'BodyRightHand', 'BodyLeftLeg',
-               'BodyRightLeg', 'SkeletonHead', 'SkeletonTorso', 'SkeletonLeftArm', 'SkeletonRightArm',
-               'SkeletonLeftHand',
-               'SkeletonRightHand', 'SkeletonLeftLeg', 'SkeletonRightLeg']
+
+class CSVRules(db.Model):
+    __tablename__ = 'CSVRules'
+    id = db.Column(db.Integer, nullable=False, autoincrement=True, unique=True, primary_key=True)
+    CSV_ID = db.Column(db.Integer, nullable=False)
+    TitanNumber = db.Column(db.Integer, nullable=False)
+    TitanName = db.Column(db.String(20), nullable=False)
+    ArmorHead = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorTorso = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorLeftArm = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorRightArm = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorLeftHand = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorRightHand = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorLeftLeg = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorRightLeg = db.Column(db.Boolean, default=True, nullable=False)
+
+    def __repr__(self):
+        return '<Task %r>' % self.id
+
+
+class PersonalRankPerCSV(db.Model):
+    __tablename__ = 'PersonalRankPerCSV'
+    id = db.Column(db.Integer, nullable=False, autoincrement=True, unique=True, primary_key=True)
+    CSV_ID = db.Column(db.Integer, nullable=False)
+    EffectiveDMG_Rank = db.Column(db.Integer, nullable=False)
+    EffectivePercentage = db.Column(db.Float, nullable=False)
+    EffectiveDMG_RankFromLast = db.Column(db.Integer, nullable=False)
+    RaidAttacks_RankFromLast = db.Column(db.Integer, nullable=False)
 
 filePath = 'D:\\github\\TT2-Clan-Raid\\sample_csv\\'
 filename_list = os.listdir(filePath)
@@ -132,6 +175,9 @@ for i in range(len(datasets_string_list)):
             Data=datasets_string_list[0],
             Issuer=Issuer if Issuer else None,
             Raid_Finished_Date=datasets_string_timestamp[i],
+            MaxRaidAttacks = df['TotalRaidAttacks'].max(),
+            NumberParticipants = df1.groupby("PlayerCode").count().shape[0],
+            TotalTitanNumber = df1['TitanNumber'].max(),
         )
         each_csv_instances.append(CSV_T_new_instance)
         db.session.add(CSV_T_new_instance)
@@ -165,7 +211,7 @@ for i in range(len(datasets_string_list)):
     def add_new_Attack_Detail_instance(row):
         global each_csv_instances
         global Attak_Detail_T_new_instances
-        Attak_Detail_T_new_instance = Attak_Detail(
+        Attak_Detail_T_new_instance = AttackDetail(
             PlayerCode=row['PlayerCode'],
             CSV_ID=csv_id,
             TitanNumber=row['TitanNumber'],
@@ -208,7 +254,7 @@ for i in range(len(datasets_string_list)):
     def add_new_Player_Name_instance(row):
         global each_csv_instances
         global Player_Name_T_new_instances
-        Player_Name_T_new_instance = Player_Name(
+        Player_Name_T_new_instance = PlayerName(
             PlayerCode=row['PlayerCode'],
             PlayerName=row['PlayerName'],
             CSV_ID=csv_id,
@@ -216,9 +262,27 @@ for i in range(len(datasets_string_list)):
         # Player_Name_T_new_instances.append(Player_Name_T_new_instance)
         each_csv_instances.append(Player_Name_T_new_instance)
     playerName_playerCode.apply(add_new_Player_Name_instance, axis=1, args=())
-    # db.session.add_all(Player_Name_T_new_instances)
-    # db.session.commit()
-    # print(f"add_new_Player_Name_instance time cost: {(datetime.datetime.now() - start_time_each)}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     db.session.add_all(each_csv_instances)
     db.session.commit()
     end_time_each = datetime.datetime.now()
