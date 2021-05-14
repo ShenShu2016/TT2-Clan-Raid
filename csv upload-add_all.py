@@ -263,60 +263,87 @@ for i in range(len(datasets_string_list)):
         each_csv_instances.append(Player_Name_T_new_instance)
     playerName_playerCode.apply(add_new_Player_Name_instance, axis=1, args=())
 
-
+    parts_sign=[]
     def add_new_CSVRules_instance(row):
-
+        global parts_sign
         global each_csv_instances
-        global player_name_t_new_instances
-        body_TF = [True, True, True, True, True, True, True, True]
+        body_TF = [True, True, True, True, True, True, True, True,row['TitanNumber']]
         body = ['BodyHead', 'BodyTorso', 'BodyLeftArm', 'BodyRightArm', 'BodyLeftHand', 'BodyRightHand', 'BodyLeftLeg',
                 'BodyRightLeg']
         for i in range(len(body)):
             if row[body[i]] <= 5000000:
                 body_TF[i] = False
+        parts_sign.append(body_TF)
+        if body_TF == [True, True, True, True, True, True, True, True,row['TitanNumber']]:
+            pass
+        else:
+            CSVRules_t_new_instance = CSVRules(
+                TitanNumber=row['TitanNumber'],
+                TitanName=row['TitanName'],
+                CSV_ID=csv_id,
+                ArmorHead=body_TF[0],
+                ArmorTorso=body_TF[1],
+                ArmorLeftArm=body_TF[2],
+                ArmorRightArm=body_TF[3],
+                ArmorLeftHand=body_TF[4],
+                ArmorRightHand=body_TF[5],
+                ArmorLeftLeg=body_TF[6],
+                ArmorRightLeg=body_TF[7],
+            )
 
-        if body_TF == [True, True, True, True, True, True, True, True]:
-            return
-
-        CSVRules_t_new_instance = CSVRules(
-            TitanNumber=row['TitanNumber'],
-            TitanName=row['TitanName'],
-            CSV_ID=csv_id,
-            ArmorHead=body_TF[0],
-            ArmorTorso=body_TF[1],
-            ArmorLeftArm=body_TF[2],
-            ArmorRightArm=body_TF[3],
-            ArmorLeftHand=body_TF[4],
-            ArmorRightHand=body_TF[5],
-            ArmorLeftLeg=body_TF[6],
-            ArmorRightLeg=body_TF[7],
-        )
-
-        each_csv_instances.append(CSVRules_t_new_instance)
+            each_csv_instances.append(CSVRules_t_new_instance)
 
 
     bodys = ['BodyHead', 'BodyTorso', 'BodyLeftArm', 'BodyRightArm', 'BodyLeftHand', 'BodyRightHand', 'BodyLeftLeg',
              'BodyRightLeg']
     no_attacks = df1.groupby(['TitanNumber', 'TitanName'])[bodys].sum()
     no_attacks = no_attacks.reset_index()
-
     no_attacks.apply(add_new_CSVRules_instance, axis=1, args=())
 
 
+    def get_WrongDMG(row):
+        global parts_sign
+        armor = ['ArmorHead', 'ArmorTorso', 'ArmorLeftArm', 'ArmorRightArm', 'ArmorLeftHand', 'ArmorRightHand',
+                 'ArmorLeftLeg', 'ArmorRightLeg']
+        WrongDMG_per_titan = 0
+        for i in parts_sign:
+            print(1)
+            if row['TitanNumber'] == i[8]:
+                print(i[8])
+                for j in range(len(i)-1):
+                    if i[j] == False:
+                        WrongDMG_per_titan += row[armor[j]]
+        return WrongDMG_per_titan
+
+
+    df1['WrongDMG']=df1.apply(get_WrongDMG, axis=1, args=())
+    df1['EffectiveDMG']= df1['TitanDamage']-df1['WrongDMG']
+    df1_sum=df1.groupby("PlyaerCode").sum()
+
+    def add_new_PersonalDetailPerCSV_instance(row):
+        global each_csv_instances
+        PersonalDetailPerCSV_T_new_instance = PersonalDetailPerCSV(
+            PlayerCode=row['PlayerCode'],
+            CSV_ID=csv_id,
+            RaidAttacks= ,
+            EffectiveDMG=,
+            WrongDMG= ,
+        )
+        # Player_Name_T_new_instances.append(Player_Name_T_new_instance)
+        each_csv_instances.append(PersonalDetailPerCSV_T_new_instance)
+    df1_sum.apply(add_new_PersonalDetailPerCSV_instance, axis=1, args=())
 
 
 
 
 
 
+    #df1.to_csv("test_csv.csv")
+    print(df1)
 
 
 
-
-
-
-
-
+    print(parts_sign)
 
 
 
@@ -326,6 +353,7 @@ for i in range(len(datasets_string_list)):
     db.session.commit()
     end_time_each = datetime.datetime.now()
     print(f'{datasets_string_timestamp[i]} time used: {(end_time_each - start_time_each)}')
+    break
 
 end_time_total = datetime.datetime.now()
 print(f'total time used: {(end_time_total - start_time_total)}')
