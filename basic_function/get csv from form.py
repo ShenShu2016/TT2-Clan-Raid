@@ -8,6 +8,7 @@ file = 'D:\\github\\TT2-Clan-Raid\\sample_csv\\20201119.csv'
 Issuer = "Shen Shu"
 Clan_Code = "qnex2"
 
+
 def get_csv():
     file_year = file[-12:-8]  # STR
     file_month = file[4-12:6-12]
