@@ -2,11 +2,19 @@ import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
-# mysql_password = "dddd"
-# mysql_instance_name = "tt3"
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_password + '@localhost/' + mysql_instance_name
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+mysql_username="root"
+mysql_password = "dddd"
+ip_address="localhost"
+mysql_instance_name = "tt5"
+# mysql_username="admin"
+# mysql_password = "hodson2003"
+# mysql_instance_name = "AWS-TT2"
+# ip_address="aws-mytt2db.cssuvkukhmkq.us-east-2.rds.amazonaws.com"
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{mysql_username}:' + mysql_password + f'@{ip_address}/' + mysql_instance_name
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
+
+
 class CSV(db.Model):
     __tablename__ = 'CSV'
     CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
@@ -42,7 +50,8 @@ class PersonalDetailPerCSV(db.Model):
     RaidAttacks = db.Column(db.Integer, nullable=False)
     EffectiveDMG = db.Column(db.Integer, nullable=False)
     WrongDMG = db.Column(db.Integer, nullable=False)
-
+    EffectivePercentage = db.Column(db.Float, nullable=False)
+    AverageDMG = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return '<Task %r>' % self.id
@@ -102,14 +111,14 @@ class CSVRules(db.Model):
     CSV_ID = db.Column(db.Integer, nullable=False)
     TitanNumber = db.Column(db.Integer, nullable=False)
     TitanName = db.Column(db.String(20), nullable=False)
-    ArmorHead = db.Column(db.Integer, nullable=False)
-    ArmorTorso = db.Column(db.Integer, nullable=False)
-    ArmorLeftArm = db.Column(db.Integer, nullable=False)
-    ArmorRightArm = db.Column(db.Integer, nullable=False)
-    ArmorLeftHand = db.Column(db.Integer, nullable=False)
-    ArmorRightHand = db.Column(db.Integer, nullable=False)
-    ArmorLeftLeg = db.Column(db.Integer, nullable=False)
-    ArmorRightLeg = db.Column(db.Integer, nullable=False)
+    ArmorHead = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorTorso = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorLeftArm = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorRightArm = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorLeftHand = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorRightHand = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorLeftLeg = db.Column(db.Boolean, default=True, nullable=False)
+    ArmorRightLeg = db.Column(db.Boolean, default=True, nullable=False)
 
     def __repr__(self):
         return '<Task %r>' % self.id
@@ -118,9 +127,9 @@ class CSVRules(db.Model):
 class PersonalRankPerCSV(db.Model):
     __tablename__ = 'PersonalRankPerCSV'
     id = db.Column(db.Integer, nullable=False, autoincrement=True, unique=True, primary_key=True)
+    PlayerCode = db.Column(db.String(10), nullable=False)
     CSV_ID = db.Column(db.Integer, nullable=False)
     EffectiveDMG_Rank = db.Column(db.Integer, nullable=False)
-    EffectivePercentage = db.Column(db.Float, nullable=False)
     EffectiveDMG_RankFromLast = db.Column(db.Integer, nullable=False)
     RaidAttacks_RankFromLast = db.Column(db.Integer, nullable=False)
 

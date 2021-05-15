@@ -1,5 +1,4 @@
-from connection_dbModel import CSV, Clan, PersonalDetailPerCSV, PlayerName, AttackDetail, header_list, db
-import os
+from connection_dbModel import CSV, Clan, PlayerName, AttackDetail, header_list, db
 import pandas as pd
 from io import StringIO
 import datetime

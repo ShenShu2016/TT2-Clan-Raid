@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+
+{% block body %}
+<h1>This is tt2-csv-submit.html</h1>
+    <form method="POST" >
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Your name</label>
+  <input  class="form-control" id="issuerInput" name= "issuerInput" placeholder="Your id will make you easy to review reports">
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Paste your clan raid csv here</label>
+    <textarea class="form-control" id="csvInput" name= "csvInput" rows="10"></textarea>
+</div>
+
+<input class="btn btn-primary" type="submit" value="Submit">
+    </form>
+{% endblock %}

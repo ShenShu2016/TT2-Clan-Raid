@@ -68,6 +68,8 @@ CREATE TABLE `PersonalDetailPerCSV` (
 	`RaidAttacks` INT NOT NULL,
 	`EffectiveDMG` INT NOT NULL,
 	`WrongDMG` INT NOT NULL,
+	`EffectivePercentage` FLOAT NOT NULL,
+	`AverageDMG` INT NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
@@ -92,7 +94,6 @@ CREATE TABLE `PersonalRankPerCSV` (
 	`PlayerCode` varchar(10) NOT NULL,
 	`CSV_ID` INT NOT NULL,
 	`EffectiveDMG_Rank` INT NOT NULL,
-	`EffectivePercentage` FLOAT NOT NULL,
 	`EffectiveDMG_RankFromLast` INT NOT NULL,
 	`RaidAttacks_RankFromLast` INT NOT NULL,
 	PRIMARY KEY (`id`)

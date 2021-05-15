@@ -1,21 +1,24 @@
-from flask import render_template,url_for,Flask
-from flask_sqlalchemy import SQLAlchemy
-import datetime
-from basic_function.connection_dbModel import *
-app = Flask(__name__)
-mysql_password = "dddd"
-mysql_instance_name = "tt3"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:' + mysql_password + '@localhost/' + mysql_instance_name
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+from flask import render_template,url_for,Flask,request
+from connection_dbModel import *
 
-@app.route('/home')
+
+@app.route('/app/homepage')
 def index():
     return render_template('index.html')
 
-@app.route('/<int:id>')
+@app.route('/app/<int:id>')
 def rount2(id):
-    return str(PlayerName.query.filter(PlayerName.id == id).first().PlayerName)
+    return
+
+@app.route('/app/tt2-csv-submit',methods=['POST','GET'])
+def tt2_csv_submit():
+    if request.method=="GET":
+        return render_template('tt2-csv-submit.html')
+    elif request.method=="POST":
+        csvInput=request.form.get('csvInput')
+        issuerInput=request.form.get('issuerInput')
+        return {"hi":csvInput,"lo":issuerInput}
+
 
 
 if __name__ == '__main__':
