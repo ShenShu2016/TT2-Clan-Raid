@@ -166,10 +166,10 @@ for i in range(len(datasets_string_list)):
     start_time_each = datetime.datetime.now()
     timestamp_now = datasets_string_timestamp[i]
     data = StringIO(datasets_string_list[i])
-    df1 = pd.read_csv(data, header=1, names=header_list)
+    df1 = pd.read_csv(data, header=0, names=header_list)
     each_csv_instances=[]
-    def add_new_CSV_instance(df):
 
+    def add_new_CSV_instance(df):
         CSV_T_new_instance = CSV(
             Upload_TimeStamp=start_time_each,#.strftime('%Y-%m-%d %H:%M:%S')
             Data=datasets_string_list[0],
@@ -183,9 +183,7 @@ for i in range(len(datasets_string_list)):
         db.session.add(CSV_T_new_instance)
         db.session.commit()
     add_new_CSV_instance(df1)
-    print(f"add_new_CSV_instance cost: {(datetime.datetime.now() - start_time_each)}")
     csv_id = CSV.query.filter(CSV.Upload_TimeStamp == start_time_each).first().CSV_ID#.strftime('%Y-%m-%d %H:%M:%S')
-    print(csv_id)
 
     playerName_playerCode = df1.groupby(["PlayerName", "PlayerCode"]).count().reset_index()[
         ["PlayerName", "PlayerCode"]]
@@ -199,13 +197,9 @@ for i in range(len(datasets_string_list)):
             CSV_ID=csv_id,
             Clan_Code=Clan_Code if Clan_Code else None,
             Issuer=Issuer if Issuer else None)
-        #Clan_T_new_instances.append(Clan_T_new_instance)
         each_csv_instances.append(Clan_T_new_instance)
     playerName_playerCode.apply(add_new_Clan_instance, axis=1, args=())
 
-    # db.session.add_all(Clan_T_new_instances)
-    # db.session.commit()
-    print(f"add_new_Clan_instance time cost: {(datetime.datetime.now() - start_time_each)}")
 
     Attak_Detail_T_new_instances=[]
     def add_new_Attack_Detail_instance(row):
@@ -242,13 +236,10 @@ for i in range(len(datasets_string_list)):
             SkeletonLeftLeg=row['SkeletonLeftLeg'],
             SkeletonRightLeg=row['SkeletonRightLeg'],
         )
-        # Attak_Detail_T_new_instances.append(Attak_Detail_T_new_instance)
         each_csv_instances.append(Attak_Detail_T_new_instance)
 
     df1.apply(add_new_Attack_Detail_instance, axis=1, args=())
-    # db.session.add_all(Attak_Detail_T_new_instances)
-    # db.session.commit()
-    # print(f"add_new_Attack_Detail_instance time cost: {(datetime.datetime.now() - start_time_each)}")
+
 
     Player_Name_T_new_instances=[]
     def add_new_Player_Name_instance(row):
@@ -259,7 +250,6 @@ for i in range(len(datasets_string_list)):
             PlayerName=row['PlayerName'],
             CSV_ID=csv_id,
         )
-        # Player_Name_T_new_instances.append(Player_Name_T_new_instance)
         each_csv_instances.append(Player_Name_T_new_instance)
     playerName_playerCode.apply(add_new_Player_Name_instance, axis=1, args=())
 
@@ -307,9 +297,7 @@ for i in range(len(datasets_string_list)):
                  'ArmorLeftLeg', 'ArmorRightLeg']
         WrongDMG_per_titan = 0
         for i in parts_sign:
-            print(1)
             if row['TitanNumber'] == i[8]:
-                print(i[8])
                 for j in range(len(i)-1):
                     if i[j] == False:
                         WrongDMG_per_titan += row[armor[j]]
@@ -318,32 +306,21 @@ for i in range(len(datasets_string_list)):
 
     df1['WrongDMG']=df1.apply(get_WrongDMG, axis=1, args=())
     df1['EffectiveDMG']= df1['TitanDamage']-df1['WrongDMG']
-    df1_sum=df1.groupby("PlyaerCode").sum()
+    df1_sum=df1.groupby("PlayerCode").sum().reset_index()
 
     def add_new_PersonalDetailPerCSV_instance(row):
         global each_csv_instances
         PersonalDetailPerCSV_T_new_instance = PersonalDetailPerCSV(
             PlayerCode=row['PlayerCode'],
             CSV_ID=csv_id,
-            RaidAttacks= ,
-            EffectiveDMG=,
-            WrongDMG= ,
+            RaidAttacks= row['TotalRaidAttacks']/(df1['TitanNumber'].max()+1),
+            EffectiveDMG=row['TitanDamage']-row['WrongDMG'],
+            WrongDMG= row['WrongDMG'],
         )
-        # Player_Name_T_new_instances.append(Player_Name_T_new_instance)
+
         each_csv_instances.append(PersonalDetailPerCSV_T_new_instance)
     df1_sum.apply(add_new_PersonalDetailPerCSV_instance, axis=1, args=())
 
-
-
-
-
-
-    #df1.to_csv("test_csv.csv")
-    print(df1)
-
-
-
-    print(parts_sign)
 
 
 
@@ -353,7 +330,7 @@ for i in range(len(datasets_string_list)):
     db.session.commit()
     end_time_each = datetime.datetime.now()
     print(f'{datasets_string_timestamp[i]} time used: {(end_time_each - start_time_each)}')
-    break
+
 
 end_time_total = datetime.datetime.now()
 print(f'total time used: {(end_time_total - start_time_total)}')
