@@ -57,10 +57,9 @@ for i in range(len(datasets_string_list)):
     playerName_playerCode = df1.groupby(["PlayerName", "PlayerCode"]).count().reset_index()[
         ["PlayerName", "PlayerCode"]]
 
-    Clan_T_new_instances = []
+
     def add_new_Clan_instance(row):
         global each_csv_instances
-        global Clan_T_new_instances
         Clan_T_new_instance = Clan(
             PlayerCode=row['PlayerCode'],
             CSV_ID=csv_id,
