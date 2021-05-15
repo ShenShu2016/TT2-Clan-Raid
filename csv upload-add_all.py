@@ -54,7 +54,8 @@ class PersonalDetailPerCSV(db.Model):
     RaidAttacks = db.Column(db.Integer, nullable=False)
     EffectiveDMG = db.Column(db.Integer, nullable=False)
     WrongDMG = db.Column(db.Integer, nullable=False)
-
+    EffectivePercentage = db.Column(db.Float, nullable=False)
+    AverageDMG = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return '<Task %r>' % self.id
@@ -130,9 +131,9 @@ class CSVRules(db.Model):
 class PersonalRankPerCSV(db.Model):
     __tablename__ = 'PersonalRankPerCSV'
     id = db.Column(db.Integer, nullable=False, autoincrement=True, unique=True, primary_key=True)
+    PlayerCode = db.Column(db.String(10), nullable=False)
     CSV_ID = db.Column(db.Integer, nullable=False)
     EffectiveDMG_Rank = db.Column(db.Integer, nullable=False)
-    EffectivePercentage = db.Column(db.Float, nullable=False)
     EffectiveDMG_RankFromLast = db.Column(db.Integer, nullable=False)
     RaidAttacks_RankFromLast = db.Column(db.Integer, nullable=False)
 
@@ -264,24 +265,22 @@ for i in range(len(datasets_string_list)):
             if row[body[i]] <= 5000000:
                 body_TF[i] = False
         parts_sign.append(body_TF)
-        if body_TF == [True, True, True, True, True, True, True, True,row['TitanNumber']]:
-            pass
-        else:
-            CSVRules_t_new_instance = CSVRules(
-                TitanNumber=row['TitanNumber'],
-                TitanName=row['TitanName'],
-                CSV_ID=csv_id,
-                ArmorHead=body_TF[0],
-                ArmorTorso=body_TF[1],
-                ArmorLeftArm=body_TF[2],
-                ArmorRightArm=body_TF[3],
-                ArmorLeftHand=body_TF[4],
-                ArmorRightHand=body_TF[5],
-                ArmorLeftLeg=body_TF[6],
-                ArmorRightLeg=body_TF[7],
-            )
 
-            each_csv_instances.append(CSVRules_t_new_instance)
+        CSVRules_t_new_instance = CSVRules(
+            TitanNumber=row['TitanNumber'],
+            TitanName=row['TitanName'],
+            CSV_ID=csv_id,
+            ArmorHead=body_TF[0],
+            ArmorTorso=body_TF[1],
+            ArmorLeftArm=body_TF[2],
+            ArmorRightArm=body_TF[3],
+            ArmorLeftHand=body_TF[4],
+            ArmorRightHand=body_TF[5],
+            ArmorLeftLeg=body_TF[6],
+            ArmorRightLeg=body_TF[7],
+        )
+
+        each_csv_instances.append(CSVRules_t_new_instance)
 
 
     bodys = ['BodyHead', 'BodyTorso', 'BodyLeftArm', 'BodyRightArm', 'BodyLeftHand', 'BodyRightHand', 'BodyLeftLeg',
@@ -306,26 +305,37 @@ for i in range(len(datasets_string_list)):
 
     df1['WrongDMG']=df1.apply(get_WrongDMG, axis=1, args=())
     df1['EffectiveDMG']= df1['TitanDamage']-df1['WrongDMG']
-    df1_sum=df1.groupby("PlayerCode").sum().reset_index()
+    df1_sum=df1.groupby(["PlayerCode","TotalRaidAttacks"]).sum().reset_index()
 
     def add_new_PersonalDetailPerCSV_instance(row):
         global each_csv_instances
         PersonalDetailPerCSV_T_new_instance = PersonalDetailPerCSV(
             PlayerCode=row['PlayerCode'],
             CSV_ID=csv_id,
-            RaidAttacks= row['TotalRaidAttacks']/(df1['TitanNumber'].max()+1),
-            EffectiveDMG=row['TitanDamage']-row['WrongDMG'],
+            RaidAttacks= row['TotalRaidAttacks'],
+            EffectiveDMG=row['EffectiveDMG'],
             WrongDMG= row['WrongDMG'],
+            EffectivePercentage = row['EffectiveDMG']/row['TitanDamage'] if row['TitanDamage']!=0 else 0,
+            AverageDMG=row['TitanDamage']/row['TotalRaidAttacks'] if row['TitanDamage']!=0 else 0,
         )
 
         each_csv_instances.append(PersonalDetailPerCSV_T_new_instance)
     df1_sum.apply(add_new_PersonalDetailPerCSV_instance, axis=1, args=())
+    df1_sum['EffectiveDMG_Rank']=df1['EffectiveDMG'].rank(method='max')
+    df1_sum['EffectiveDMG_RankFromLast'] = df1['EffectiveDMG'].rank(method='max',ascending=False)
+    df1_sum['RaidAttacks_RankFromLast'] = df1['TotalRaidAttacks'].rank(method='max', ascending=False)
+    def add_new_PersonalRankPerCSV_instance(row):
+        global each_csv_instances
+        PersonalRankPerCSV_T_new_instance = PersonalRankPerCSV(
+            PlayerCode=row['PlayerCode'],
+            CSV_ID=csv_id,
+            EffectiveDMG_Rank= row['EffectiveDMG_Rank'],
+            EffectiveDMG_RankFromLast= row['EffectiveDMG_RankFromLast'],
+            RaidAttacks_RankFromLast= row['RaidAttacks_RankFromLast']
+        )
 
-
-
-
-
-
+        each_csv_instances.append(PersonalRankPerCSV_T_new_instance)
+    df1_sum.apply(add_new_PersonalRankPerCSV_instance, axis=1, args=())
     db.session.add_all(each_csv_instances)
     db.session.commit()
     end_time_each = datetime.datetime.now()
