@@ -3,17 +3,29 @@
 
 
 {% block body %}
-<h1>This is tt2-csv-submit.html</h1>
-    <form method="POST" >
-<div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Your name</label>
-  <input  class="form-control" id="issuerInput" name= "issuerInput" placeholder="Your id will make you easy to review reports">
-</div>
-<div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">Paste your clan raid csv here</label>
-    <textarea class="form-control" id="csvInput" name= "csvInput" rows="10"></textarea>
-</div>
+    <div class="container" >
+        <h1>This is tt2-csv-submit.html</h1>
+            <form method="POST" >
+        <div class="mb-5">
+          <label for="exampleFormControlInput1" class="form-label">Your name</label>
+          <input  class="form-control" id="issuerInput" name= "issuerInput" placeholder="Your id will make you easy to review reports">
+        </div>
 
-<input class="btn btn-primary" type="submit" value="Submit">
-    </form>
+                <h5>Do you know when it finished?</h5>
+        <div class="mb-5">
+            <div class="input-group">
+              <span class="input-group-text">Finished Date:</span>
+                <input type="date" aria-label="Finished Year" class="form-control" placeholder="Year">
+            </div>
+        </div>
+                <h5>Please paste your Clan Raid CSV Here</h5>
+
+        <div class="mb-5">
+{#            <label for="exampleFormControlTextarea1" class="form-label">Paste your clan raid csv here</label>#}
+            <textarea class="form-control" id="csvInput" name= "csvInput" rows="10"></textarea>
+        </div>
+
+        <input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+    </div>
 {% endblock %}

@@ -2,7 +2,7 @@ from flask import render_template,url_for,Flask,request
 from connection_dbModel import *
 
 
-@app.route('/app/homepage')
+@app.route('/')
 def index():
     return render_template('index.html')
 
@@ -10,7 +10,7 @@ def index():
 def rount2(id):
     return
 
-@app.route('/app/tt2-csv-submit',methods=['POST','GET'])
+@app.route('/tt2/csv-submit',methods=['POST','GET'])
 def tt2_csv_submit():
     if request.method=="GET":
         return render_template('tt2-csv-submit.html')
