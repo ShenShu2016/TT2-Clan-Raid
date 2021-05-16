@@ -1,27 +1,32 @@
-from flask import render_template,url_for,Flask,request
+from flask import render_template, url_for, Flask, request
 from connection_dbModel import *
 from io import StringIO
 import pandas as pd
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+
 @app.route('/app/<int:id>')
 def rount2(id):
     return
 
-@app.route('/tt2/csv-submit',methods=['POST','GET'])
+
+@app.route('/tt2/csv-submit', methods=['POST', 'GET'])
 def tt2_csv_submit():
-    if request.method=="GET":
+    if request.method == "GET":
         return render_template('tt2-csv-submit.html')
-    elif request.method=="POST":
+    elif request.method == "POST":
         start_time_total = datetime.datetime.now()
         print(f"project start at: {start_time_total}")
-        csvInput=request.form.get('csvInput').strip()
-        issuerInput=request.form.get('issuerInput')
-        inputFRaid_Finished_date=request.form.get('inputFRaid_Finished_date')
-        inputClan_Code=request.form.get('inputClan_Code')
+        csvInput = request.form.get('csvInput').strip()
+        issuerInput = request.form.get('issuerInput')
+        inputFRaid_Finished_date = request.form.get('inputFRaid_Finished_date')
+        print(inputFRaid_Finished_date)
+        print(type(inputFRaid_Finished_date))
+        inputClan_Code = request.form.get('inputClan_Code')
 
         data = StringIO(csvInput)
         df1 = pd.read_csv(data, header=0, names=header_list)
@@ -29,34 +34,36 @@ def tt2_csv_submit():
 
         def add_new_CSV_instance(df):
             CSV_T_new_instance = CSV(
+                Upload_TimeStamp=datetime.datetime.now(),
                 Data=csvInput,
                 Issuer=issuerInput,
-                Raid_Finished_Date=inputFRaid_Finished_date,
+                Raid_Finished_Date=inputFRaid_Finished_date if inputFRaid_Finished_date else None ,
                 MaxRaidAttacks=df['TotalRaidAttacks'].max(),
                 NumberParticipants=df1.groupby("PlayerCode").count().shape[0],
                 TotalTitanNumber=df1['TitanNumber'].max(),
             )
             return CSV_T_new_instance
-        CSV_T_new_instance=add_new_CSV_instance(df1)
+
+        CSV_T_new_instance = add_new_CSV_instance(df1)
         db.session.add(CSV_T_new_instance)
         db.session.commit()
-        csv_id=CSV_T_new_instance.CSV_ID
+        csv_id = CSV_T_new_instance.CSV_ID
 
         playerName_playerCode = df1.groupby(["PlayerName", "PlayerCode"]).count().reset_index()[
             ["PlayerName", "PlayerCode"]]
-        each_csv_instances=[]
+        each_csv_instances = []
+
         def add_new_Clan_instance(row):
-            #global each_csv_instances
             Clan_T_new_instance = Clan(
                 PlayerCode=row['PlayerCode'],
                 CSV_ID=csv_id,
                 Clan_Code=inputClan_Code,
                 Issuer=issuerInput)
             each_csv_instances.append(Clan_T_new_instance)
+
         playerName_playerCode.apply(add_new_Clan_instance, axis=1, args=())
 
         def add_new_Attack_Detail_instance(row):
-            #global each_csv_instances
             Attak_Detail_T_new_instance = AttackDetail(
                 PlayerCode=row['PlayerCode'],
                 CSV_ID=csv_id,
@@ -89,24 +96,23 @@ def tt2_csv_submit():
                 SkeletonRightLeg=row['SkeletonRightLeg'],
             )
             each_csv_instances.append(Attak_Detail_T_new_instance)
+
         df1.apply(add_new_Attack_Detail_instance, axis=1, args=())
 
-
-
         def add_new_Player_Name_instance(row):
-            #global each_csv_instances
             Player_Name_T_new_instance = PlayerName(
                 PlayerCode=row['PlayerCode'],
                 PlayerName=row['PlayerName'],
                 CSV_ID=csv_id,
             )
             each_csv_instances.append(Player_Name_T_new_instance)
+
         playerName_playerCode.apply(add_new_Player_Name_instance, axis=1, args=())
 
         parts_sign = []
+
         def add_new_CSVRules_instance(row):
-            #global parts_sign
-            #global each_csv_instances
+
             body_TF = [True, True, True, True, True, True, True, True, row['TitanNumber']]
             body = ['BodyHead', 'BodyTorso', 'BodyLeftArm', 'BodyRightArm', 'BodyLeftHand', 'BodyRightHand',
                     'BodyLeftLeg',
@@ -129,7 +135,6 @@ def tt2_csv_submit():
                 ArmorLeftLeg=body_TF[6],
                 ArmorRightLeg=body_TF[7],
             )
-
             each_csv_instances.append(CSVRules_t_new_instance)
 
         bodys = ['BodyHead', 'BodyTorso', 'BodyLeftArm', 'BodyRightArm', 'BodyLeftHand', 'BodyRightHand', 'BodyLeftLeg',
@@ -139,7 +144,7 @@ def tt2_csv_submit():
         no_attacks.apply(add_new_CSVRules_instance, axis=1, args=())
 
         def get_WrongDMG(row):
-            #global parts_sign
+            # global parts_sign
             armor = ['ArmorHead', 'ArmorTorso', 'ArmorLeftArm', 'ArmorRightArm', 'ArmorLeftHand', 'ArmorRightHand',
                      'ArmorLeftLeg', 'ArmorRightLeg']
             WrongDMG_per_titan = 0
@@ -151,30 +156,33 @@ def tt2_csv_submit():
             return WrongDMG_per_titan
 
         df1['WrongDMG'] = df1.apply(get_WrongDMG, axis=1, args=())
-        df1['EffectiveDMG'] = df1['TitanDamage'] - df1['WrongDMG']
-        df1_sum = df1.groupby(["PlayerCode", "TotalRaidAttacks"]).sum().reset_index()
 
+        df1['EffectiveDMG'] = df1['TitanDamage'] - df1['WrongDMG']
+        df1_sum = df1.groupby(['PlayerName',"PlayerCode", "TotalRaidAttacks"]).sum().reset_index()
+        df1_sum['AverageDMG'] = df1_sum['TitanDamage'] / df1_sum['TotalRaidAttacks']
+        df1_sum['EffectivePercentage'] = df1_sum['EffectiveDMG'] / df1_sum['TitanDamage']
         def add_new_PersonalDetailPerCSV_instance(row):
-            #global each_csv_instances
+            EffectivePercentage = row['EffectiveDMG'] / row['TitanDamage'] if row['TitanDamage'] != 0 else 0
+            AverageDMG = row['TitanDamage'] / row['TotalRaidAttacks'] if row['TitanDamage'] != 0 else 0
             PersonalDetailPerCSV_T_new_instance = PersonalDetailPerCSV(
                 PlayerCode=row['PlayerCode'],
                 CSV_ID=csv_id,
                 RaidAttacks=row['TotalRaidAttacks'],
                 EffectiveDMG=row['EffectiveDMG'],
                 WrongDMG=row['WrongDMG'],
-                EffectivePercentage=row['EffectiveDMG'] / row['TitanDamage'] if row['TitanDamage'] != 0 else 0,
-                AverageDMG=row['TitanDamage'] / row['TotalRaidAttacks'] if row['TitanDamage'] != 0 else 0,
+                EffectivePercentage=EffectivePercentage,
+                AverageDMG=AverageDMG,
             )
 
             each_csv_instances.append(PersonalDetailPerCSV_T_new_instance)
 
+
         df1_sum.apply(add_new_PersonalDetailPerCSV_instance, axis=1, args=())
-        df1_sum['EffectiveDMG_Rank'] = df1['EffectiveDMG'].rank(method='max')
-        df1_sum['EffectiveDMG_RankFromLast'] = df1['EffectiveDMG'].rank(method='max', ascending=False)
-        df1_sum['RaidAttacks_RankFromLast'] = df1['TotalRaidAttacks'].rank(method='max', ascending=False)
+        df1_sum['EffectiveDMG_Rank'] = df1_sum['EffectiveDMG'].rank(method='max').map(lambda x:int(x))
+        df1_sum['EffectiveDMG_RankFromLast'] = df1_sum['EffectiveDMG'].rank(method='max', ascending=False).map(lambda x:int(x))
+        df1_sum['RaidAttacks_RankFromLast'] = df1_sum['TotalRaidAttacks'].rank(method='max', ascending=False).map(lambda x:int(x))
 
         def add_new_PersonalRankPerCSV_instance(row):
-            #global each_csv_instances
             PersonalRankPerCSV_T_new_instance = PersonalRankPerCSV(
                 PlayerCode=row['PlayerCode'],
                 CSV_ID=csv_id,
@@ -182,17 +190,17 @@ def tt2_csv_submit():
                 EffectiveDMG_RankFromLast=row['EffectiveDMG_RankFromLast'],
                 RaidAttacks_RankFromLast=row['RaidAttacks_RankFromLast']
             )
-
             each_csv_instances.append(PersonalRankPerCSV_T_new_instance)
 
         df1_sum.apply(add_new_PersonalRankPerCSV_instance, axis=1, args=())
+
         db.session.add_all(each_csv_instances)
         db.session.commit()
         end_time_total = datetime.datetime.now()
         print(f'total time used: {(end_time_total - start_time_total)}')
 
-        return {"csvInput":csvInput,"issuerInput":issuerInput,"inputFRaid_Finished_date":inputFRaid_Finished_date,"inputClan_Code":inputClan_Code}
-
+        print(df1_sum)
+        return render_template("csv-detail.html", datasets=df1_sum)
 
 
 if __name__ == '__main__':

@@ -1,10 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block body %}
+    <div class="sticky-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-1 py-1  border bg-danger shadow-sm p-3 mb-1  rounded">No.</div>
+                <div class="col py-1  border bg-danger shadow-sm p-3 mb-1  rounded">PlayerName</div>
+                <div class="col-1 py-1  border bg-danger shadow-sm p-3 mb-1  rounded">PlayerCode</div>
+                <div class="col-1 py-1  border bg-danger shadow-sm p-3 mb-1  rounded">RaidAttacks</div>
+                <div class="col py-1  border bg-danger shadow-sm p-3 mb-1  rounded">EffectiveDMG</div>
+                <div class="col py-1 border bg-danger shadow-sm p-3 mb-1  rounded">AverageDMG</div>
+                <div class="col-1 py-1  border bg-danger shadow-sm p-3 mb-1  rounded">WrongDMG</div>
+                <div class="col py-1  border bg-danger shadow-sm p-3 mb-1  rounded">EffectivePercentage</div>
+            </div>
+        </div>
+    </div>
+
+<div class="container">
+
+        {% for key,row in datasets.iterrows() %}
+            <div class="row">
+                <div class="col-1 py-0  border bg-light shadow-sm p-3 mb-1 bg-white rounded">{{key}}</div>
+                <div class="col py-0  border bg-light shadow-sm p-3 mb-1 bg-white rounded">{{row['PlayerName']}}</div>
+                <div class="col-1 py-0  border bg-light shadow-sm p-3 mb-1 bg-white rounded">{{row['PlayerCode']}}</div>
+                <div class="col-1 py-0  border bg-light shadow-sm p-3 mb-1 bg-white rounded">{{row['TotalRaidAttacks']}}</div>
+                <div class="col py-0 border bg-light shadow-sm p-3 mb-1 bg-white rounded">{{row['EffectiveDMG']|round(1)}}</div>
+                <div class="col py-0 border bg-light shadow-sm p-3 mb-1 bg-white rounded">{{row['AverageDMG']|round(1)}}</div>
+                <div class="col-1 py-0  border bg-light shadow-sm p-3 mb-1 bg-white rounded">{{row['WrongDMG']|round(1)}}</div>
+                <div class="col py-0 border bg-light shadow-sm p-3 mb-1 bg-white rounded">{{(row['EffectivePercentage']*100)|round(1)}}</div>
+            </div>
+        {% endfor %}
+</div>
+{% endblock %}

@@ -5,6 +5,10 @@ import datetime
 from connection_dbModel import CSV, Clan,AttackDetail,PersonalDetailPerCSV,PersonalRankPerCSV,PlayerName,CSVRules,header_list, \
     db
 
+pd.set_option('display.max_rows', 100)
+pd.set_option('display.max_columns', 1000)
+pd.set_option("display.max_colwidth",1000)
+pd.set_option('display.width',1000)
 filePath = 'D:\\github\\TT2-Clan-Raid\\sample_csv\\'
 filename_list = os.listdir(filePath)
 
@@ -169,10 +173,16 @@ for i in range(len(datasets_string_list)):
                         WrongDMG_per_titan += row[armor[j]]
         return WrongDMG_per_titan
 
-
     df1['WrongDMG']=df1.apply(get_WrongDMG, axis=1, args=())
+
     df1['EffectiveDMG']= df1['TitanDamage']-df1['WrongDMG']
     df1_sum=df1.groupby(["PlayerCode","TotalRaidAttacks"]).sum().reset_index()
+    df1_sum['EffectiveDMG_Rank']=df1_sum['EffectiveDMG'].rank(method='max', ascending=False)
+    df1_sum['EffectiveDMG_RankFromLast'] = df1_sum['EffectiveDMG'].rank(method='max')
+    df1_sum['RaidAttacks_RankFromLast'] = df1_sum['TotalRaidAttacks'].rank(method='max')
+    df1_sum["EffectivePercentage"]=df1_sum['TitanDamage'] / df1_sum['TotalRaidAttacks'] if df1_sum['TitanDamage'] != 0 else 0
+    df1_sum['AverageDMG'] = df1_sum['TitanDamage'] / df1_sum['TotalRaidAttacks'] if df1_sum['TitanDamage'] != 0 else 0
+
 
     def add_new_PersonalDetailPerCSV_instance(row):
         global each_csv_instances
@@ -182,15 +192,13 @@ for i in range(len(datasets_string_list)):
             RaidAttacks= row['TotalRaidAttacks'],
             EffectiveDMG=row['EffectiveDMG'],
             WrongDMG= row['WrongDMG'],
-            EffectivePercentage = row['EffectiveDMG']/row['TitanDamage'] if row['TitanDamage']!=0 else 0,
-            AverageDMG=row['TitanDamage']/row['TotalRaidAttacks'] if row['TitanDamage']!=0 else 0,
+            EffectivePercentage = row["EffectivePercentage"],
+            AverageDMG=row['AverageDMG'],
         )
 
         each_csv_instances.append(PersonalDetailPerCSV_T_new_instance)
     df1_sum.apply(add_new_PersonalDetailPerCSV_instance, axis=1, args=())
-    df1_sum['EffectiveDMG_Rank']=df1['EffectiveDMG'].rank(method='max')
-    df1_sum['EffectiveDMG_RankFromLast'] = df1['EffectiveDMG'].rank(method='max',ascending=False)
-    df1_sum['RaidAttacks_RankFromLast'] = df1['TotalRaidAttacks'].rank(method='max', ascending=False)
+
     def add_new_PersonalRankPerCSV_instance(row):
         global each_csv_instances
         PersonalRankPerCSV_T_new_instance = PersonalRankPerCSV(
@@ -201,8 +209,11 @@ for i in range(len(datasets_string_list)):
             RaidAttacks_RankFromLast= row['RaidAttacks_RankFromLast']
         )
 
+
         each_csv_instances.append(PersonalRankPerCSV_T_new_instance)
     df1_sum.apply(add_new_PersonalRankPerCSV_instance, axis=1, args=())
+
+
     db.session.add_all(each_csv_instances)
     db.session.commit()
     end_time_each = datetime.datetime.now()
