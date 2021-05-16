@@ -3,23 +3,34 @@
 
 
 {% block body %}
-    <div class="container" >
-        <h1>This is tt2-csv-submit.html</h1>
+    <div class="container " >
+        <div class="mt-4 mb-4">
+            <h1 style="text-align:center">Submit your Clan Raid CSV, then you can get detail</h1>
+        </div>
+
+        <div class="mt-4 mb-4  shadow p-3 mb-5 bg-white rounded">
+            <h4 class="text-danger">Notice:</h4>
+            <h6>You do not need to click which part you didn't attack</h6>
+
+        </div>
             <form method="POST" >
-        <div class="mb-5">
-          <label for="exampleFormControlInput1" class="form-label">Your name</label>
-          <input  class="form-control"  name= "issuerInput" placeholder="Your id will make you easy to review reports">
+                                <h5>Your PlayerCode:</h5>
+        <div class="mb-3">
+            <div class="input-group">
+              <span class="input-group-text">PlayerCode:</span>
+                <input type="text" aria-label="issuerInput" name="issuerInput" class="form-control" placeholder="Your PlayerCode" >
+            </div>
         </div>
 
                 <h5>Do you know when it finished?</h5>
-        <div class="mb-5">
+        <div class="mb-3">
             <div class="input-group">
               <span class="input-group-text">Finished Date:</span>
-                <input type="date" aria-label="Finished Year" name="inputFRaid_Finished_date" class="form-control" placeholder="Year">
+                <input type="date" aria-label="Finished Year" name="inputFRaid_Finished_date" class="form-control" placeholder="Year" value="">
             </div>
         </div>
                 <h5>What is your clan ID?</h5>
-        <div class="mb-5">
+        <div class="mb-3">
             <div class="input-group">
               <span class="input-group-text">Clan ID:</span>
                 <input type="text" aria-label="Clan ID" name="inputClan_Code"class="form-control" placeholder="Clan ID">
@@ -27,9 +38,9 @@
         </div>
                 <h5>Please paste your Clan Raid CSV Here!</h5>
 
-        <div class="mb-5">
+        <div class="mb-3">
 {#            <label for="exampleFormControlTextarea1" class="form-label">Paste your clan raid csv here</label>#}
-            <textarea class="form-control"  name= "csvInput" rows="10"></textarea>
+            <textarea class="form-control"  name= "csvInput" rows="7"></textarea>
         </div>
 
         <input class="btn btn-primary" type="submit" value="Submit">

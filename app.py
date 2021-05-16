@@ -32,21 +32,25 @@ def tt2_csv_submit():
         df1 = pd.read_csv(data, header=0, names=header_list)
         each_csv_instances = []
 
+
         def add_new_CSV_instance(df):
             CSV_T_new_instance = CSV(
                 Upload_TimeStamp=datetime.datetime.now(),
                 Data=csvInput,
                 Issuer=issuerInput,
-                Raid_Finished_Date=inputFRaid_Finished_date if inputFRaid_Finished_date else None ,
+                Raid_Finished_Date=inputFRaid_Finished_date if inputFRaid_Finished_date else None,
                 MaxRaidAttacks=df['TotalRaidAttacks'].max(),
                 NumberParticipants=df1.groupby("PlayerCode").count().shape[0],
                 TotalTitanNumber=df1['TitanNumber'].max(),
             )
             return CSV_T_new_instance
 
-        CSV_T_new_instance = add_new_CSV_instance(df1)
-        db.session.add(CSV_T_new_instance)
-        db.session.commit()
+        try:
+            CSV_T_new_instance = add_new_CSV_instance(df1)
+            db.session.add(CSV_T_new_instance)
+            db.session.commit()
+        except:
+            return render_template('tt2-csv-submit.html')
         csv_id = CSV_T_new_instance.CSV_ID
 
         playerName_playerCode = df1.groupby(["PlayerName", "PlayerCode"]).count().reset_index()[
@@ -158,9 +162,10 @@ def tt2_csv_submit():
         df1['WrongDMG'] = df1.apply(get_WrongDMG, axis=1, args=())
 
         df1['EffectiveDMG'] = df1['TitanDamage'] - df1['WrongDMG']
-        df1_sum = df1.groupby(['PlayerName',"PlayerCode", "TotalRaidAttacks"]).sum().reset_index()
+        df1_sum = df1.groupby(['PlayerName', "PlayerCode", "TotalRaidAttacks"]).sum().reset_index()
         df1_sum['AverageDMG'] = df1_sum['TitanDamage'] / df1_sum['TotalRaidAttacks']
         df1_sum['EffectivePercentage'] = df1_sum['EffectiveDMG'] / df1_sum['TitanDamage']
+
         def add_new_PersonalDetailPerCSV_instance(row):
             EffectivePercentage = row['EffectiveDMG'] / row['TitanDamage'] if row['TitanDamage'] != 0 else 0
             AverageDMG = row['TitanDamage'] / row['TotalRaidAttacks'] if row['TitanDamage'] != 0 else 0
@@ -176,11 +181,12 @@ def tt2_csv_submit():
 
             each_csv_instances.append(PersonalDetailPerCSV_T_new_instance)
 
-
         df1_sum.apply(add_new_PersonalDetailPerCSV_instance, axis=1, args=())
-        df1_sum['EffectiveDMG_Rank'] = df1_sum['EffectiveDMG'].rank(method='max').map(lambda x:int(x))
-        df1_sum['EffectiveDMG_RankFromLast'] = df1_sum['EffectiveDMG'].rank(method='max', ascending=False).map(lambda x:int(x))
-        df1_sum['RaidAttacks_RankFromLast'] = df1_sum['TotalRaidAttacks'].rank(method='max', ascending=False).map(lambda x:int(x))
+        df1_sum['EffectiveDMG_Rank'] = df1_sum['EffectiveDMG'].rank(method='max').map(lambda x: int(x))
+        df1_sum['EffectiveDMG_RankFromLast'] = df1_sum['EffectiveDMG'].rank(method='max', ascending=False).map(
+            lambda x: int(x))
+        df1_sum['RaidAttacks_RankFromLast'] = df1_sum['TotalRaidAttacks'].rank(method='max', ascending=False).map(
+            lambda x: int(x))
 
         def add_new_PersonalRankPerCSV_instance(row):
             PersonalRankPerCSV_T_new_instance = PersonalRankPerCSV(
