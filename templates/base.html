@@ -12,21 +12,22 @@
 
 <nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="http://127.0.0.1:5000">Shen Shu Project</a>
+    <a class="navbar-brand" href="http://127.0.0.1:5000/">Shen Shu Project</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000">Home</a>
+          <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000/">Home</a>
+        </li>
+          <li class="nav-item">
+          <a class="nav-link active" href="http://127.0.0.1:5000/tt2/csv-submit">TapTitan2 Clan Raid Project</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Features</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="http://127.0.0.1:5000/tt2/csv-submit">TapTitan2 Clan Raid Project</a>
-        </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown link
@@ -41,7 +42,22 @@
     </div>
   </div>
 </nav>
-
+<div class="nav-scroller bg-white shadow-sm">
+  <nav class="nav nav-underline">
+    <a class="nav-link active" href="#">Dashboard</a>
+    <a class="nav-link" href="#">
+      Friends
+      <span class="badge badge-pill bg-light align-text-bottom">27</span>
+    </a>
+    <a class="nav-link" href="https://www.linkedin.com/in/shenshu/">Linkedin</a>
+    <a class="nav-link" href="https://github.com/ShenShu2016">Github</a>
+    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" href="#">Link</a>
+  </nav>
+</div>
 <body>
     {% block body %}{% endblock %}
 </body>
