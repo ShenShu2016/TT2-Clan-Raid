@@ -168,8 +168,13 @@ def tt2_csv_submit():
 
         data = StringIO(csvInput)
         df1 = pd.read_csv(data, header=0, names=header_list)
-        each_csv_instances = []
+        try:
+            if df1[0].shape[1]!=12:
+                df1=pd.read_csv(r"sample_csv\\20210507.csv",header=0, names=header_list)
+        except:
+            df1 = pd.read_csv(r"sample_csv\\20210507.csv",header = 0, names = header_list)
 
+        each_csv_instances = []
 
         def add_new_CSV_instance(df):
             CSV_T_new_instance = CSV(
