@@ -1,29 +1,33 @@
-from flask import render_template, url_for, Flask, request,session
+from flask import render_template, url_for, Flask, request, session
 from flask_sqlalchemy import SQLAlchemy
 from io import StringIO
 import pandas as pd
 import datetime
 import os
 from flask import send_from_directory
+
 application = app = Flask(__name__)
-app.secret_key = "super secret key"
 # mysql_username="root"
 # mysql_password = "dddd"
 # ip_address="localhost"
 # mysql_instance_name = "tt5"
-mysql_username="admin"
+mysql_username = "admin"
 mysql_password = "hodson2003"
 mysql_instance_name = "AWS-TT2"
-ip_address="aws-mytt2db.cssuvkukhmkq.us-east-2.rds.amazonaws.com"
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{mysql_username}:' + mysql_password + f'@{ip_address}/' + mysql_instance_name
+ip_address = "aws-mytt2db.cssuvkukhmkq.us-east-2.rds.amazonaws.com"
+app.config[
+    'SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{mysql_username}:' + mysql_password + f'@{ip_address}/' + mysql_instance_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
+app.secret_key = "super secret key"
 db = SQLAlchemy(app)
+
+restart_date = datetime.datetime.now()
+
 
 class CSV(db.Model):
     __tablename__ = 'CSV'
     CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
-    Upload_TimeStamp = db.Column(db.DateTime, nullable=False,default=datetime.datetime.now())
+    Upload_TimeStamp = db.Column(db.DateTime, nullable=False, default=datetime.datetime.now())
     Data = db.Column(db.Text, nullable=False)
     Issuer = db.Column(db.String(50), nullable=True)
     Raid_Finished_Date = db.Column(db.DateTime, nullable=True)
@@ -138,6 +142,7 @@ class PersonalRankPerCSV(db.Model):
     EffectiveDMG_RankFromLast = db.Column(db.Integer, nullable=False)
     RaidAttacks_RankFromLast = db.Column(db.Integer, nullable=False)
 
+
 header_list = ['PlayerName', 'PlayerCode', 'TotalRaidAttacks', 'TitanNumber', 'TitanName', 'TitanDamage', 'ArmorHead',
                'ArmorTorso', 'ArmorLeftArm', 'ArmorRightArm', 'ArmorLeftHand', 'ArmorRightHand', 'ArmorLeftLeg',
                'ArmorRightLeg',
@@ -145,7 +150,7 @@ header_list = ['PlayerName', 'PlayerCode', 'TotalRaidAttacks', 'TitanNumber', 'T
                'BodyRightLeg', 'SkeletonHead', 'SkeletonTorso', 'SkeletonLeftArm', 'SkeletonRightArm',
                'SkeletonLeftHand',
                'SkeletonRightHand', 'SkeletonLeftLeg', 'SkeletonRightLeg']
-data_example=StringIO("""玩家名称,玩家编号,总突击伤害,泰坦编号,泰坦名称,泰坦伤害,头部(装甲),身体(装甲),左臂(装甲),右臂(装甲),左手(装甲),右手(装甲),左腿(装甲),右腿(装甲),头部(肉体),身体(肉体),左臂(肉体),右臂(肉体),左手(肉体),右手(肉体),左腿(肉体),右腿(肉体),头部(骨架),身体(骨架),左臂(骨架),右臂(骨架),左手(骨架),右手(骨架),左腿(骨架),右腿(骨架)
+data_example = StringIO("""玩家名称,玩家编号,总突击伤害,泰坦编号,泰坦名称,泰坦伤害,头部(装甲),身体(装甲),左臂(装甲),右臂(装甲),左手(装甲),右手(装甲),左腿(装甲),右腿(装甲),头部(肉体),身体(肉体),左臂(肉体),右臂(肉体),左手(肉体),右手(肉体),左腿(肉体),右腿(肉体),头部(骨架),身体(骨架),左臂(骨架),右臂(骨架),左手(骨架),右手(骨架),左腿(骨架),右腿(骨架)
 もふもふ,xnxdx22,24,0,Jukk,6802625,0,0,0,0,0,0,0,0,0,0,0,0,0,1380457,3757815,1662110,0,0,0,0,0,1836,0,406
 もふもふ,xnxdx22,24,1,Jukk,9436090,0,6230313,577325,501492,595431,600410,558084,373033,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 もふもふ,xnxdx22,24,2,Takedar,16466850,586236,10363021,0,511909,469074,345305,789017,338819,0,3063150,313,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -546,21 +551,27 @@ Sam,5r33qw5,14,7,Jukk,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 小怪兽,65ymgpr,20,5,Terro,2679480,525,552475,82530,2447,0,121071,0,117706,0,927417,0,0,76973,0,797129,0,0,0,0,0,0,0,1203,0
 小怪兽,65ymgpr,20,6,Takedar,2805925,81251,1510159,93581,76468,0,77763,67995,69143,0,0,0,0,829560,0,0,0,0,0,0,0,0,0,0,0
 小怪兽,65ymgpr,20,7,Jukk,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0""")
-df1_example=pd.read_csv(data_example, header=0, names=header_list)
+df1_example = pd.read_csv(data_example, header=0, names=header_list)
 
-@app.before_first_request
-def before_first_request():
-    session['click'] = 0
+
+# @app.before_first_request
+# def before_first_request():
+#     session['load'] = 0
+#     print(session['load'])
+
 
 @app.route('/')
 def index():
-    session['click'] += 1
-    return render_template('index.html')
+    # session['load'] += 1
+    return render_template('index.html', restart_date=restart_date)
+
 
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+
 @app.route('/app/<int:id>')
 def rount2(id):
     return
@@ -583,8 +594,8 @@ def tt2_csv_submit():
         data = StringIO(csvInput)
         df1 = pd.read_csv(data, header=0, names=header_list)
         try:
-            if df1[0].shape[1]!=12:
-                df1=df1_example
+            if df1[0].shape[1] != 12:
+                df1 = df1_example
         except:
             df1 = df1_example
 

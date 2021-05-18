@@ -1,26 +1,28 @@
 {% extends 'base.html' %}
 {% block head %}<title>ShenS HomePage</title>{% endblock %}
 {% block body %}
-
+<body>
     <div class="container">
         <header class="blog-header py-3">
-            <h1 style="text-align:center">My Portfolios          <img src="{{url_for('static', filename='/img/mylogo-w.png')}}" ><img src="{{url_for('static', filename='/img/avatar.png')}}"  alt="avatar.png"></h1>
+            <h1 class="display-2" style="text-align:center">My Portfolios          <img src="{{url_for('static', filename='/img/mylogo-w.png')}}" ></h1>
         </header>
         <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark ">
-            <div class="col-md-5 px-0">
-                <h6>{{ session['click']}} visit time since last update</h6>
-                <h1 class="display-4 font-italic">My Own WebSite</h1>
+            <div class="">
+                <h6>You are the ???? visitor  since last update ({{ restart_date }})</h6>
+                <h1 class="display-4 font-italic mb-lg-5 mt-lg-5">Shu Shen Project               <img class="rounded float-lg-end" src="{{url_for('static', filename='/img/avatar.png')}}"  alt="avatar.png"></h1>
+                <h3>Technique Used in this website</h3>
                 <ul>
-                <li>MySQL</li>
-                <li>Flask</li>
-                <li>AWS</li>
-                <li>Bootstrap</li>
-                <li>JavaScript</li></ul>
+                    <li>Database: MySQL (AWS RDS)</li>
+                    <li>Backend: Flask (AWS Elastic Beanstalk)</li>
+                    <li>Frontend: HTML5, Jinja2, JavaScript, Bootstrap</li>
+                    <li>Cloud: AWS</li>
+                </ul>
+
                 <p class="lead my-3">More future will be added... Soon...</p>
                 <p class="lead my-3"></p>
                 <p class="lead mb-0"><a href="http://shushengacademy.com/tt2/csv-submit" class="text-white font-weight-bold">TT2 Player Click here!  <img src="{{url_for('static', filename='/img/taptitans2.png')}} "height="50" width="50"  alt="taptitans2.png"></a></p>
             </div>
-</div>
+    </div>
 
 <div class="row mt-3">
   <div class="col-sm-6">
@@ -43,5 +45,389 @@
   </div>
 </div>
     </div>
+
+<main role="main" class="container mt-lg-5">
+  <div class="row">
+    <div class="col-md-8 blog-main">
+      <h3 class="pb-4 mb-4 font-italic border-bottom">
+        Hi
+      </h3>
+      <div class="blog-post">
+        <h2 class="blog-post-title">Resume</h2>
+        <p class="blog-post-meta">May 17, 2021 by <a href="#">Shen</a></p>
+
+        <body lang="ZH-CN" link="#0563C1" vlink="#954F72" style="word-wrap:break-word;
+text-justify-trim:punctuation">
+
+<div class="WordSection1">
+
+<p class="MsoNormal" style="margin-top:14.0pt;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:0cm;text-align:justify;text-justify:inter-ideograph;
+border:none"><b><span lang="EN-US" style="font-size:16.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">SKILLS </span></b><b><span lang="EN-US" style="font-size:16.0pt;
+font-family:&quot;Arial&quot;,sans-serif">AND<span style="color:black"> QUALIFICATIONS</span></span></b></p>
+
+<p class="MsoListParagraph" style="margin-left:39.0pt;text-indent:-21.0pt;
+border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif">Over 3</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif"> year of
+hands-on experience in Python</span><span lang="EN-US" style="font-size:11.0pt;
+font-family:宋体">,</span><span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Arial&quot;,sans-serif"> Adv </span><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Arial&quot;,sans-serif">SQL, VBA</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif"> programming</span></p>
+
+<p class="MsoListParagraph" style="margin-left:39.0pt;text-indent:-21.0pt;
+border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">3
+years’ perfect experience in in pandas, </span><span lang="EN-US" style="font-size:11.0pt;font-family:等线;color:black">N</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">umpy, Matplot,
+Seaborn, TensorFlow</span></p>
+
+<p class="MsoListParagraph" style="margin-left:39.0pt;text-indent:-21.0pt;
+border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif">Hands-on
+experience of data collection and cleaning, custom ETLs, descriptive statics
+and visualization, machine learning</span><span lang="EN-US" style="font-size:
+11.0pt;font-family:宋体">,</span><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Arial&quot;,sans-serif"> structured and unstructured data in a variety
+of formats XML, JSON</span></p>
+
+<p class="MsoListParagraph" style="margin-left:39.0pt;text-indent:-21.0pt"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">3 years’
+experience in report and dashboard designing, especially developed automated
+report on MOM(WOW) and MTD(WTD) using Power BI, and Ploty Dash</span></p>
+
+<p class="MsoListParagraph" style="margin-left:39.0pt;text-indent:-21.0pt;
+border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Extensive
+experience in</span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black"> Neural Networks</span><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Arial&quot;,sans-serif">, <span style="color:black">CNN</span>, <span style="color:black">RNN</span> and time series analysis<span style="color:black">
+with solid knowledge of data </span>science</span></p>
+
+<p class="MsoListParagraph" style="margin-left:39.0pt;text-indent:-21.0pt"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif">Good understanding of
+public cloud computing technologies, architecture and big data technologies
+including MangoDB, Spark, Hadoop, Hive, Cassandra</span></p>
+
+<p class="MsoListParagraph" style="margin-left:39.0pt;text-indent:-21.0pt"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif">Experience working with
+Dynamic 365(CRM, ADX and Operations and Finance) with Microsoft Azure, MS SQL
+Server,<span style="color:black"> Proven expertise in Access, Excel (pivot
+table, conditional format, multi table operation), PowerPoint, Google
+Analytics.</span></span></p>
+
+<p class="MsoListParagraph" style="margin-left:39.0pt;text-indent:-21.0pt;
+border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Diverse
+business knowledge accumulated within education, digital media, eCommerce,
+banking, and insurance sector</span></p>
+
+<p class="MsoListParagraph" style="margin-left:39.0pt;text-indent:-21.0pt"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif">Familiar with R, SAS,
+C++, JavaScript, Lua, VB, Jinjia2</span></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+border:none"><i><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif">&nbsp;</span></i></p>
+
+<p class="MsoNormal" style="text-align:justify;text-justify:inter-ideograph;
+border:none"><i><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif">&nbsp;</span></i></p>
+
+<p class="MsoNormal" style="margin-top:14.0pt;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:0cm;text-align:justify;text-justify:inter-ideograph;
+border:none"><b><span lang="EN-US" style="font-size:16.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">EXPERIENCE</span></b></p>
+
+<p class="MsoNormal" style="margin-top:14.0pt;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:0cm;text-align:justify;text-justify:inter-ideograph;
+border:none"><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Data Engineer --- FundPage Inc.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">20</span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">20</span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif">.</span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif">8</span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif"> <span style="color:black">– 2021.</span></span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">05</span></b></p>
+
+<p class="MsoListParagraph" style="margin-top:0cm;margin-right:0cm;margin-bottom:
+2.0pt;margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;
+text-indent:-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;
+</span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Performed ETL source data files from different relational
+database, such as SQL Server, Oracle, DB2 and web data. Processed data
+validation, cleansing, large data manipulation, system integration and
+migration</span></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:12.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Process
+large datasets using data management and analysis systems, mainly built on SQL
+Server BI platform, to analyze the data and create new looks of financial
+insights with SSIS</span></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:12.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Manage
+Investment Transaction Data on Microsoft SQL Server, and analyze that data
+primarily using Power BI </span></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:12.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Develop
+integrated data sources, spreadsheets, KPI reports, dashboards and
+presentations, with visualized and interactive reports, using Power BI for
+frontend business</span></p>
+
+<p class="MsoListParagraph" style="margin-top:0cm;margin-right:0cm;margin-bottom:
+2.0pt;margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;
+text-indent:-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;
+</span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Joint forces with Content Manager, Technical leaders, and QAs to
+ensure business acceptance</span></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:12.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Creating
+UI populated on web pages</span></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Use
+Python to generate REST API for the output</span></p>
+
+<p class="MsoNormal" style="margin-bottom:2.0pt;text-align:justify;text-justify:
+inter-ideograph;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Arial&quot;,sans-serif;color:black">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-bottom:4.0pt;text-align:justify;text-justify:
+inter-ideograph;border:none"><b><span lang="EN-US" style="font-size:12.0pt;
+font-family:&quot;Arial&quot;,sans-serif;color:black">Business</span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">
+Analysis --- Dewey Institute</span></b><b><span lang="EN-US" style="font-size:
+12.0pt;font-family:&quot;Arial&quot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:black">201</span></span></b><b><span lang="EN-US" style="font-size:
+12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">8</span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif">.0</span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif">6</span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif"> <span style="color:black">– 2021.04</span></span></b><b><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black"> </span></b></p>
+
+<p class="MsoNormal"><b><span lang="EN-US" style="font-size:11.0pt;font-family:
+&quot;Arial&quot;,sans-serif;color:black">&nbsp;</span></b></p>
+
+<p class="MsoListParagraph" style="margin-left:36.0pt;text-indent:-18.0pt"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Processed
+various industry marketing campaign analysis. Selecting target student base on
+various analysis method, set up control group, proceed A/B test analysis.</span></p>
+
+<p class="MsoListParagraph" style="margin-top:0cm;margin-right:0cm;margin-bottom:
+2.0pt;margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;
+text-indent:-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;
+</span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Worked in a project group of 10 to complete the University of
+Toronto Green Path Cup Winter Camp into a fully digital platform. The new
+ePlatform integrated web portal, social media, and mobile service</span></p>
+
+<p class="MsoListParagraph" style="margin-left:36.0pt;text-indent:-18.0pt"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Designed
+various report and dashboard, especially create automated weekly, monthly report.</span></p>
+
+<p class="MsoListParagraph" style="margin-top:0cm;margin-right:0cm;margin-bottom:
+2.0pt;margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;
+text-indent:-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;
+</span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Data process modeling, IT project management, and knowledge of IT
+standards, procedures, and policies.</span></p>
+
+<p class="MsoListParagraph" style="margin-left:36.0pt;text-indent:-18.0pt"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Office 365
+admin</span></p>
+
+<p class="Default" style="margin-left:36.0pt;text-indent:-18.0pt"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt">Developed and maintained a portfolio with over 2000
+clients under management </span></p>
+
+<p class="MsoListParagraph" style="margin-top:0cm;margin-right:0cm;margin-bottom:
+2.0pt;margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;
+text-indent:-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;
+</span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Managed CRM solution export, import from development, UAT and
+production</span></p>
+
+<p class="MsoListParagraph" style="margin-top:0cm;margin-right:0cm;margin-bottom:
+2.0pt;margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;
+text-indent:-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;
+</span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Delivered 5+ projects using Waterfall and Agile mythologies</span></p>
+
+<p class="Default" style="margin-left:18.0pt"><span lang="EN-US" style="font-size:
+11.0pt">&nbsp;</span></p>
+
+<p class="MsoNormal" style="margin-top:14.0pt;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:0cm;text-align:justify;text-justify:inter-ideograph;
+border:none"><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">AI Financial Power Group &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></b></p>
+
+<p class="MsoNormal" style="margin-top:14.0pt;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:0cm;text-align:justify;text-justify:inter-ideograph;
+border:none"><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Customer Info &amp; investment account Company management System</span></b></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Design
+MySQL database for a new Financial investment company.</span></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Transfer
+all data by using python and Flask with data validation, customer information
+and investment account information into database.</span></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Use
+Django, CSS, HTML to build company website include add, update, customer
+information and account information.</span></p>
+
+<p class="MsoListParagraph" style="margin-top:0cm;margin-right:0cm;margin-bottom:
+2.0pt;margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;
+text-indent:-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;
+</span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Analysis potential customers in database and use plotly dash to
+build dashboard.</span></p>
+
+<p class="MsoListParagraph" style="margin-top:0cm;margin-right:0cm;margin-bottom:
+2.0pt;margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;
+text-indent:-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;
+</span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Maintain and create AWS RDB database instance</span></p>
+
+<p class="MsoNormal" style="margin-top:14.0pt;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:0cm;text-align:justify;text-justify:inter-ideograph;
+border:none"><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">&nbsp;</span></b></p>
+
+<p class="MsoNormal" style="margin-top:14.0pt;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:0cm;text-align:justify;text-justify:inter-ideograph;
+border:none"><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Group project for US Presidential Election Sentiment Analysis&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">2020</span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif">.09 <span style="color:black">– 2020.</span></span></b><b><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">12</span></b></p>
+
+<p class="MsoNormal" style="margin-top:14.0pt;margin-right:0cm;margin-bottom:
+6.0pt;margin-left:0cm;text-align:justify;text-justify:inter-ideograph;
+border:none"><span lang="EN-US" style="font-size:11.5pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black;background:white">Perform sentiment analysis on the tweets that is
+available for the two presidency candidates</span></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Cleaning
+dirty text from tweets, such as converting uppercase letters into lowercase,
+removing special characters, links, punctuation, words containing numbers and
+only keep tweets in English</span></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Use
+TextBlob and VADER from NLTK package to get the subjectivity and polarity</span></p>
+
+<p class="MsoNormal" style="margin-top:0cm;margin-right:0cm;margin-bottom:2.0pt;
+margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;text-indent:
+-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;font-family:Wingdings;
+color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp; </span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black">Use
+Folium to create heat map depend on latitude and longitude</span></p>
+
+<p class="MsoListParagraph" style="margin-top:0cm;margin-right:0cm;margin-bottom:
+2.0pt;margin-left:36.0pt;text-align:justify;text-justify:inter-ideograph;
+text-indent:-18.0pt;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:Wingdings;color:black">l<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;
+</span></span><span lang="EN-US" style="font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif;
+color:black">Use Tensorflow.keras to create a neural network and Tokenizer for
+deep learning</span></p>
+
+<p class="MsoNormal" style="margin-bottom:2.0pt;text-align:justify;text-justify:
+inter-ideograph;border:none"><span lang="EN-US" style="font-size:11.0pt;
+font-family:&quot;Arial&quot;,sans-serif;color:black">&nbsp;</span></p>
+
+
+</div>
+
+
+
+
+</body>
+      </div><!-- /.blog-post -->
+
+{#      <div class="blog-post">#}
+{#        <h2 class="blog-post-title">Another blog post</h2>#}
+{#        <p class="blog-post-meta">December 23, 2013 by <a href="#">Jacob</a></p>#}
+{##}
+{#        <p>I am ready for the road less traveled. Already <a href="#">brushing off the dust</a>. Yeah, you're lucky if you're on her plane. I used to bite my tongue and hold my breath. Uh, She’s a beast. I call her Karma (come back). Black ray-bans, you know she's with the band. I can't sleep let's run away and don't ever look back, don't ever look back.</p>#}
+{#        <blockquote>#}
+{#          <p>Growing fast into a <strong>bolt of lightning</strong>. Be careful Try not to lead her on</p>#}
+{#        </blockquote>#}
+{#        <p>I'm intrigued, for a peek, heard it's fascinating. Oh oh! Wanna be a victim ready for abduction. She's got that international smile, oh yeah, she's got that one international smile. Do you ever feel, feel so paper thin. I’m gon’ put her in a coma. Sun-kissed skin so hot we'll melt your popsicle.</p>#}
+{#        <p>This is transcendental, on another level, boy, you're my lucky star.</p>#}
+{#      </div><!-- /.blog-post -->#}
+{##}
+{#      <div class="blog-post">#}
+{#        <h2 class="blog-post-title">New feature</h2>#}
+{#        <p class="blog-post-meta">December 14, 2013 by <a href="#">Chris</a></p>#}
+{##}
+{#        <p>From Tokyo to Mexico, to Rio. Yeah, you take me to utopia. I'm walking on air. We'd make out in your Mustang to Radiohead. I mean the ones, I mean like she's the one. Sun-kissed skin so hot we'll melt your popsicle. Slow cooking pancakes for my boy, still up, still fresh as a Daisy.</p>#}
+{#        <ul>#}
+{#          <li>I hope you got a healthy appetite.</li>#}
+{#          <li>You're never gonna be unsatisfied.</li>#}
+{#          <li>Got a motel and built a fort out of sheets.</li>#}
+{#        </ul>#}
+{#        <p>Don't need apologies. Boy, you're an alien your touch so foreign, it's <em>supernatural</em>, extraterrestrial. Talk about our future like we had a clue. I can feel a phoenix inside of me.</p>#}
+{#      </div><!-- /.blog-post -->#}
+
+      <nav class="blog-pagination">
+        <a class="btn btn-outline-primary" href="#">Older</a>
+        <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
+      </nav>
+
+    </div><!-- /.blog-main -->
+
+    <aside class="col-md-4 blog-sidebar">
+      <div class="p-4 mb-3 bg-light rounded">
+        <h4 class="font-italic">About Me</h4>
+        <p class="mb-0">Currently I am look for a new job related to Finance, logistic, gaming:</p>
+          <ur>
+              <li>Data Analyst</li>
+              <li>Data Engineer</li>
+              <li>Data Science</li>
+          </ur>
+      </div>
+
+      <div class="p-4">
+        <h4 class="font-italic">Archives</h4>
+        <ol class="list-unstyled mb-0">
+            <li><a href="#">Data Science Certificate</a></li>
+            <li><a href="#">Power BI</a></li>
+            <li><a href="#">Azure Fundamentals</a></li>
+            <li><a href="#">Introduction to Programming Using Python</a></li>
+          <li><a href="#">Mechnicial Engineering</a></li>
+          <li><a href="#">6</a></li>
+          <li><a href="#">7</a></li>
+          <li><a href="#">8</a></li>
+          <li><a href="#">9</a></li>
+          <li><a href="#">10</a></li>
+          <li><a href="#">11</a></li>
+          <li><a href="#">12</a></li>
+        </ol>
+      </div>
+
+      <div class="p-4">
+        <h4 class="font-italic">Elsewhere</h4>
+        <ol class="list-unstyled">
+          <li><a href="https://github.com/ShenShu2016">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/shenshu/">Linkedin</a></li>
+
+        </ol>
+      </div>
+    </aside><!-- /.blog-sidebar -->
+
+  </div><!-- /.row -->
+
+</main>
+
 </body>
 {% endblock %}
