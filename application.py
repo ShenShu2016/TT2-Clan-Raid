@@ -1,9 +1,12 @@
-from flask import render_template, url_for, Flask, request
+from flask import render_template, url_for, Flask, request,session
 from flask_sqlalchemy import SQLAlchemy
 from io import StringIO
 import pandas as pd
 import datetime
+import os
+from flask import send_from_directory
 application = app = Flask(__name__)
+app.secret_key = "super secret key"
 # mysql_username="root"
 # mysql_password = "dddd"
 # ip_address="localhost"
@@ -14,6 +17,7 @@ mysql_instance_name = "AWS-TT2"
 ip_address="aws-mytt2db.cssuvkukhmkq.us-east-2.rds.amazonaws.com"
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{mysql_username}:' + mysql_password + f'@{ip_address}/' + mysql_instance_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
 db = SQLAlchemy(app)
 
 class CSV(db.Model):
@@ -543,11 +547,20 @@ Sam,5r33qw5,14,7,Jukk,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 小怪兽,65ymgpr,20,6,Takedar,2805925,81251,1510159,93581,76468,0,77763,67995,69143,0,0,0,0,829560,0,0,0,0,0,0,0,0,0,0,0
 小怪兽,65ymgpr,20,7,Jukk,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0""")
 df1_example=pd.read_csv(data_example, header=0, names=header_list)
+
+@app.before_first_request
+def before_first_request():
+    session['click'] = 0
+
 @app.route('/')
 def index():
+    session['click'] += 1
     return render_template('index.html')
 
-
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 @app.route('/app/<int:id>')
 def rount2(id):
     return
