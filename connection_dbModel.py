@@ -3,21 +3,21 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-mysql_username="root"
-mysql_password = "dddd"
-ip_address="localhost"
-mysql_instance_name = "tt5"
-# mysql_username="admin"
-# mysql_password = "hodson2003"
-# mysql_instance_name = "AWS-TT2"
-# ip_address="aws-mytt2db.cssuvkukhmkq.us-east-2.rds.amazonaws.com"
+# mysql_username="root"
+# mysql_password = "dddd"
+# ip_address="localhost"
+# mysql_instance_name = "tt5"
+mysql_username="admin"
+mysql_password = "hodson2003"
+mysql_instance_name = "ssaca"
+ip_address="aws-mytt2db.cssuvkukhmkq.us-east-2.rds.amazonaws.com"
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{mysql_username}:' + mysql_password + f'@{ip_address}/' + mysql_instance_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 
 class CSV(db.Model):
-    __tablename__ = 'CSV'
+    __tablename__ = 'tt2_csv'
     CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
     Upload_TimeStamp = db.Column(db.DateTime, nullable=False,default=datetime.datetime.now())
     Data = db.Column(db.Text, nullable=False)
@@ -32,10 +32,10 @@ class CSV(db.Model):
 
 
 class Clan(db.Model):
-    __tablename__ = 'Clan'
+    __tablename__ = 'tt2_clan'
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     PlayerCode = db.Column(db.String(10), nullable=False)
-    CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True)
+    CSV_ID_id = db.Column(db.Integer, nullable=False, autoincrement=True)
     Clan_Code = db.Column(db.String(10), nullable=True)
     Issuer = db.Column(db.String(50), nullable=True)
 
@@ -44,10 +44,10 @@ class Clan(db.Model):
 
 
 class PersonalDetailPerCSV(db.Model):
-    __tablename__ = 'PersonalDetailPerCSV'
+    __tablename__ = 'tt2_personaldetailperCSV'
     id = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
     PlayerCode = db.Column(db.String(10), nullable=False)
-    CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True)
+    CSV_ID_id = db.Column(db.Integer, nullable=False, autoincrement=True)
     RaidAttacks = db.Column(db.Integer, nullable=False)
     EffectiveDMG = db.Column(db.Integer, nullable=False)
     WrongDMG = db.Column(db.Integer, nullable=False)
@@ -59,21 +59,21 @@ class PersonalDetailPerCSV(db.Model):
 
 
 class PlayerName(db.Model):
-    __tablename__ = 'PlayerName'
+    __tablename__ = 'tt2_playername'
     id = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
     PlayerCode = db.Column(db.String(10), nullable=False)
     PlayerName = db.Column(db.String(50), nullable=False)
-    CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True)
+    CSV_ID_id = db.Column(db.Integer, nullable=False, autoincrement=True)
 
     def __repr__(self):
         return '<Task %r>' % self.id
 
 
 class AttackDetail(db.Model):
-    __tablename__ = 'AttackDetail'
+    __tablename__ = 'tt2_attackdetail'
     id = db.Column(db.Integer, nullable=False, autoincrement=True, unique=True, primary_key=True)
     PlayerCode = db.Column(db.String(10), nullable=False)
-    CSV_ID = db.Column(db.Integer, nullable=False, autoincrement=True)
+    CSV_ID_id = db.Column(db.Integer, nullable=False, autoincrement=True)
     TitanNumber = db.Column(db.Integer, nullable=False)
     TitanName = db.Column(db.String(20), nullable=False)
     TitanDamage = db.Column(db.Integer, nullable=False)
@@ -107,9 +107,9 @@ class AttackDetail(db.Model):
 
 
 class CSVRules(db.Model):
-    __tablename__ = 'CSVRules'
+    __tablename__ = 'tt2_csvrules'
     id = db.Column(db.Integer, nullable=False, autoincrement=True, unique=True, primary_key=True)
-    CSV_ID = db.Column(db.Integer, nullable=False)
+    CSV_ID_id = db.Column(db.Integer, nullable=False)
     TitanNumber = db.Column(db.Integer, nullable=False)
     TitanName = db.Column(db.String(20), nullable=False)
     ArmorHead = db.Column(db.Boolean, default=True, nullable=False)
@@ -126,10 +126,10 @@ class CSVRules(db.Model):
 
 
 class PersonalRankPerCSV(db.Model):
-    __tablename__ = 'PersonalRankPerCSV'
+    __tablename__ = 'tt2_personalrankpercsv'
     id = db.Column(db.Integer, nullable=False, autoincrement=True, unique=True, primary_key=True)
     PlayerCode = db.Column(db.String(10), nullable=False)
-    CSV_ID = db.Column(db.Integer, nullable=False)
+    CSV_ID_id = db.Column(db.Integer, nullable=False)
     EffectiveDMG_Rank = db.Column(db.Integer, nullable=False)
     EffectiveDMG_RankFromLast = db.Column(db.Integer, nullable=False)
     RaidAttacks_RankFromLast = db.Column(db.Integer, nullable=False)
